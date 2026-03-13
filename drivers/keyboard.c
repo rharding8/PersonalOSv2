@@ -17,6 +17,10 @@ void init_keyboard(){
     register_interrupt_handler(IRQ1, keyboard_callback);
 }
 
+char to_hex_char(uchar_8 nibble) {
+    return (nibble < 10) ? (nibble + '0') : (nibble - 10 + 'A');
+}
+
 void print_letter(uchar_8 scancode) {
     switch (scancode) {
         case 0x0:
@@ -215,13 +219,20 @@ void print_letter(uchar_8 scancode) {
         default:
             /* 'keuyp' event corresponds to the 'keydown' + 0x80 
              * it may still be a scancode we haven't implemented yet, or
-             * maybe a control/escape sequence */
+             * maybe a control/escape sequence 
             if (scancode <= 0x7f) {
                 kprint("Unknown key down");
             } else if (scancode <= 0x39 + 0x80) {
                 // kprint("key up ");
                 // print_letter(scancode - 0x80);
-            } else kprint("Unknown key up");
+            } else kprint("Unknown key up"); */
+
+            char buffer[20] = "Unknown Key: ";
+            buffer[13] = '0';
+            buffer[14] = 'x';
+            buffer[15] = to_hex_char((scancode >> 4) & 0x0F);
+            buffer[16] = to_hex_char(scancode & 0x0F);
+            buffer[17] = '\0';
         break;
     }
 }
