@@ -8,6 +8,21 @@ This is a personal side project to write OS from scratch. As an computer archite
 - Interrupt handling protocol
 - Driver code to control printing word on screen
 - Keyboard driver to take user input
+V2:
+- Properly display unrecognized keys
+TODO By Check-In:
+- Implement Function Key Functions
+- Implement Memory Management Driver
+- Show Clearing and Printing Code Buffer Memory
+TODO By End:
+- Pass and Execute Valid Load and Store Assembly From Input to CPU
+- Pass and Execute Peeks and Pokes
+STRETCH GOALS:
+- Pass and Execute a Valid Jump Instruction
+- Implement Checking Assembly Validity
+- Streamline Compilation Process
+- Make Portable to macOS and WSL
+
 
 ## How to run
 
@@ -18,10 +33,6 @@ This is a personal side project to write OS from scratch. As an computer archite
 `sudo apt-get install  nasm`
 
 #### Install cross compiler environment
-`export CC=/usr/local/bin/gcc-4.9`
-
-`export LD=/usr/local/bin/gcc-4.9`
-
 `export PREFIX="/usr/local/i386elfgcc"`
 
 `export TARGET=i386-elf`

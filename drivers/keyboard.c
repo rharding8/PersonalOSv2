@@ -216,23 +216,23 @@ void print_letter(uchar_8 scancode) {
         case 0x39:
             kprint(" ");
             break;
-        default:
+        default: ;
             /* 'keuyp' event corresponds to the 'keydown' + 0x80 
              * it may still be a scancode we haven't implemented yet, or
-             * maybe a control/escape sequence 
+             * maybe a control/escape sequence */
             if (scancode <= 0x7f) {
-                kprint("Unknown key down");
-            } else if (scancode <= 0x39 + 0x80) {
+                char buffer[20] = "Unknown Key: ";
+                buffer[13] = '0';
+                buffer[14] = 'x';
+                buffer[15] = to_hex_char((scancode >> 4) & 0x0F);
+                buffer[16] = to_hex_char(scancode & 0x0F);
+                buffer[17] = '\0';
+                kprint(buffer);
+                // kprint("Unknown key down");
+            } /* else if (scancode <= 0x39 + 0x80) {
                 // kprint("key up ");
                 // print_letter(scancode - 0x80);
             } else kprint("Unknown key up"); */
-
-            char buffer[20] = "Unknown Key: ";
-            buffer[13] = '0';
-            buffer[14] = 'x';
-            buffer[15] = to_hex_char((scancode >> 4) & 0x0F);
-            buffer[16] = to_hex_char(scancode & 0x0F);
-            buffer[17] = '\0';
         break;
     }
 }
