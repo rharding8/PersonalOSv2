@@ -194,6 +194,13 @@ void kprint_at(char *data, int col, int row){
 
 void kprint(void *data){kprint_at(data,-1,-1);};
 
+void kprint_char(char c) {
+    char data[2];
+    data[0] = c;
+    data[1] = '\0';
+    kprint(data);
+}
+
 void kline_break(){
     int offset = get_cursor_offset();
     int col = 0;

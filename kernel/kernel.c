@@ -5,6 +5,7 @@
 #include "./../memory/memory.h"
 #include "./../memory/loader.h"
 #include "./../process/process.h"
+#include "./shell.h"
 
 void test_program() {
     volatile char* vga = (volatile char*)0xB8000;
@@ -31,12 +32,14 @@ void main(){
     asm volatile("sti");
     // init_timer(50);
     init_keyboard();
-    void* prog_addr = load((uchar_8*)test_program, 512);
-    Process p;
-    p.entry = prog_addr;
+    // void* prog_addr = load((uchar_8*)test_program, 512);
+    // Process p;
+    // p.entry = prog_addr;
 
-    void* stack = alloc_block();
-    p.stack = (void*)((uint_32)stack + 4096);
-    run(&p);
-    while (1);
+    // void* stack = alloc_block();
+    // p.stack = (void*)((uint_32)stack + 4096);
+    // run(&p);
+
+    shell_run();
+    // while (1);
 }
