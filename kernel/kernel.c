@@ -2,9 +2,9 @@
 #include "./../drivers/keyboard.h"
 #include "./../cpu/isr.h"
 #include "./../cpu/idt.h"
-#include "../memory/memory.h"
-#include "../memory/loader.h"
-#include "../process/process.h"
+#include "./../memory/memory.h"
+#include "./../memory/loader.h"
+#include "./../process/process.h"
 
 void test_program() {
     volatile char* vga = (volatile char*)0xB8000;
@@ -17,7 +17,7 @@ void test_program() {
 }
 
 void main(){
-    init();
+    init_memory();
     clear_screen();
     isr_install();
     
@@ -37,6 +37,6 @@ void main(){
 
     void* stack = alloc_block();
     p.stack = (void*)((uint_32)stack + 4096);
-    process_run(&p);
+    run(&p);
     while (1);
 }

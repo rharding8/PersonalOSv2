@@ -7,19 +7,21 @@
 
 static uchar_8 bitmap[NBLOCKS];
 
-void init() {
-    for (int i = 0; i < NBLOCKS; i++) {
+void init_memory() {
+    int i;
+    for (i = 0; i < NBLOCKS; i++) {
         bitmap[i] = 0;
     }
 
     // Reserve first few blocks (kernel, low memory, etc.)
-    for (int i = 0; i < 10; i++) {
+    for (i = 0; i < 10; i++) {
         bitmap[i] = 1;
     }
 }
 
 void* alloc_block() {
-    for (int i = 0; i < NBLOCKS; i++) {
+    int i;
+    for (i = 0; i < NBLOCKS; i++) {
         if (bitmap[i] == 0) {
             bitmap[i] = 1;
             return (void*)(i * BLOCKSIZE);
@@ -28,7 +30,7 @@ void* alloc_block() {
     return 0;
 }
 
-void pmm_free_block(void* addr) {
+void free_block(void* addr) {
     int index = (uint_32)addr / BLOCKSIZE;
     bitmap[index] = 0;
 }
