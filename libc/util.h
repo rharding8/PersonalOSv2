@@ -9,4 +9,7 @@ void int_to_ascii(int n, char str[]);
 void reverse(char s[]);
 int strlen(char s[]);
 
+int strcmp(char* a, char* b);
+int strncmp(char* a, char* b, int n);
+
 #endif

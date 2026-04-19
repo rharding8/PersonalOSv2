@@ -30,6 +30,14 @@ void* alloc_block() {
     return 0;
 }
 
+int peek_block(void* addr) {
+    int index = (uint_32)addr / BLOCKSIZE;
+    if (index < NBLOCKS && bitmap[index] == 1) {
+        return *((int*)addr);
+    }
+    return -1; // Invalid address
+}
+
 void free_block(void* addr) {
     int index = (uint_32)addr / BLOCKSIZE;
     bitmap[index] = 0;

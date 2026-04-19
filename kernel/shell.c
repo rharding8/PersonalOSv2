@@ -1,6 +1,7 @@
 #include "./../drivers/keyboard.h"
 #include "./../drivers/screen.h"
 #include "./../cpu/types.h"
+#include "./../interpreter/interpreter.h"
 
 static void read_line(char* buffer) {
     int i = 0;
@@ -35,5 +36,6 @@ void shell_run() {
         kprint(">  ");
         clear_one_character();
         read_line(input);
+        interpret(input);
     }
 }

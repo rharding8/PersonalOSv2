@@ -43,3 +43,32 @@ void int_to_ascii(int n, char str[]){
     reverse(str);
 }
 
+void ascii_to_int(char str[], int* n){
+    int i = 0, sign = FALSE;
+    if(str[0]=='-'){
+        sign = TRUE;
+        i++;
+    }
+    *n=0;
+    for(;str[i]!='\0';i++){
+        *n = *n*10 + (str[i]-'0');
+    }
+    if(sign)*n=-*n;
+}
+
+int strcmp(char* a, char* b) {
+    while (*a && *b) {
+        if (*a != *b) return *a - *b;
+        a++; b++;
+    }
+    return *a - *b;
+}
+
+int strncmp(char* a, char* b, int n) {
+    int i;
+    for (i = 0; i < n; i++) {
+        if (a[i] != b[i]) return a[i] - b[i];
+        if (a[i] == 0) return 0;
+    }
+    return 0;
+}

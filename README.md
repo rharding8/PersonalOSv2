@@ -10,16 +10,9 @@ This is a personal side project to write OS from scratch. As an computer archite
 - Keyboard driver to take user input
 V2:
 - Properly display unrecognized keys
-TODO By Check-In:
-- Implement Function Key Functions
-- Implement Memory Management Driver
-- Show Clearing and Printing Code Buffer Memory
+- Memory Management
 TODO By End:
-- Pass and Execute Valid Load and Store Assembly From Input to CPU
-- Pass and Execute Peeks and Pokes
-STRETCH GOALS:
-- Pass and Execute a Valid Jump Instruction
-- Implement Checking Assembly Validity
+- Pass and Execute Valid Code From Input to CPU
 - Streamline Compilation Process
 - Make Portable to macOS and WSL
 
