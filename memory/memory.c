@@ -38,6 +38,13 @@ int peek_block(void* addr) {
     return -1; // Invalid address
 }
 
+void poke_block(void* addr, int value) {
+    int index = (uint_32)addr / BLOCKSIZE;
+    if (index < NBLOCKS && bitmap[index] == 1) {
+        *((int*)addr) = value;
+    }
+}
+
 void free_block(void* addr) {
     int index = (uint_32)addr / BLOCKSIZE;
     bitmap[index] = 0;

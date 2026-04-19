@@ -10,10 +10,11 @@ CPU_DIR:=cpu
 LIB_DIR	:=libc
 MEM_DIR :=memory
 PROC_DIR :=process
+INT_DIR :=interpreter
 
 OS_IMAGE:=os.bin
-C_SRC:= $(wildcard $(KERNEL_DIR)/*.c $(DRIVER_DIR)/*.c $(CPU_DIR)/*.c $(LIB_DIR)/*.c $(MEM_DIR)/*.c $(PROC_DIR)/*.c)
-C_HEADERS := $(wildcard $(KERNEL_DIR)/*.h $(DRIVER_DIR)/*.h $(CPU_DIR)/*.h $(LIB_DIR)/*.h $(MEM_DIR)/*.h $(PROC_DIR)/*.h)
+C_SRC:= $(wildcard $(KERNEL_DIR)/*.c $(DRIVER_DIR)/*.c $(CPU_DIR)/*.c $(LIB_DIR)/*.c $(MEM_DIR)/*.c $(PROC_DIR)/*.c $(INT_DIR)/*.c)
+C_HEADERS := $(wildcard $(KERNEL_DIR)/*.h $(DRIVER_DIR)/*.h $(CPU_DIR)/*.h $(LIB_DIR)/*.h $(MEM_DIR)/*.h $(PROC_DIR)/*.h $(INT_DIR)/*.h)
 SRC_ASM:=$(wildcard $(BOOT_DIR)/*.asm)
 OBJ:= ${C_SRC:%.c=%.o $(CPU_DIR)/interrupt.o}
 
@@ -58,7 +59,7 @@ debug: $(OS_IMAGE) kernel.elf
 
 clean:
 	rm -rf $(OS_IMAGE) *.bin *.dis *.o *.elf
-	rm -rf $(KERNEL_DIR)/*.o $(BOOT_DIR)/*.bin $(DRIVER_DIR)/*.o $(BOOT_DIR)/*.o $(CPU_DIR)/*.o $(LIB_DIR)/*.bin $(CPU_DIR)/*.o $(LIB_DIR)/*.o $(MEM_DIR)/*.o $(PROC_DIR)/*.o
+	rm -rf $(KERNEL_DIR)/*.o $(BOOT_DIR)/*.bin $(DRIVER_DIR)/*.o $(BOOT_DIR)/*.o $(CPU_DIR)/*.o $(LIB_DIR)/*.bin $(CPU_DIR)/*.o $(LIB_DIR)/*.o $(MEM_DIR)/*.o $(PROC_DIR)/*.o $(INT_DIR)/*.o
 
 # .PHONY: all
 

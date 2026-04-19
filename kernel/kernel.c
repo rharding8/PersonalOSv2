@@ -2,6 +2,7 @@
 #include "./../drivers/keyboard.h"
 #include "./../cpu/isr.h"
 #include "./../cpu/idt.h"
+#include "./../cpu/vga_port.h"
 #include "./../memory/memory.h"
 #include "./../memory/loader.h"
 #include "./../process/process.h"
@@ -17,29 +18,40 @@ void test_program() {
     while (1);
 }
 
+void shutdown() {
+    port_word_out(0x604, 0x2000);
+}
+
 void main(){
-    init_memory();
-    clear_screen();
     isr_install();
+    int exit_flag = 0;
+    while (!exit_flag) {
+        init_memory();
+        clear_screen();
+        
+        
+        // Demonstracte interrupt
+        // __asm__ __volatile__("int $2");
+        // __asm__ __volatile__("int $4");
+        // __asm__ __volatile__("int $15");
+        // __asm__ __volatile__("int $16");
+
+        // Demonstracte Timer Interrupt
+        asm volatile("sti");
+        // init_timer(50);
+        init_keyboard();
+        // void* prog_addr = load((uchar_8*)test_program, 512);
+        // Process p;
+        // p.entry = prog_addr;
+
+        // void* stack = alloc_block();
+        // p.stack = (void*)((uint_32)stack + 4096);
+        // run(&p);
+
+        exit_flag = shell_run();
+    }
+    shutdown();
+
     
-    // Demonstracte interrupt
-    // __asm__ __volatile__("int $2");
-    // __asm__ __volatile__("int $4");
-    // __asm__ __volatile__("int $15");
-    // __asm__ __volatile__("int $16");
-
-    // Demonstracte Timer Interrupt
-    asm volatile("sti");
-    // init_timer(50);
-    init_keyboard();
-    // void* prog_addr = load((uchar_8*)test_program, 512);
-    // Process p;
-    // p.entry = prog_addr;
-
-    // void* stack = alloc_block();
-    // p.stack = (void*)((uint_32)stack + 4096);
-    // run(&p);
-
-    shell_run();
     // while (1);
 }

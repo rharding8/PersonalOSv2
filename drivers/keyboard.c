@@ -7,6 +7,8 @@
 
 #define BUFFERSIZE 128
 
+static int shift = 0;
+
 static char buffer[BUFFERSIZE];
 static int head = 0;
 static int tail = 0;
@@ -48,7 +50,7 @@ char convert_char(uchar_8 scancode) {
         case 0x0C:
             return '-';
         case 0x0D:
-            return '+';
+            return shift ? '+' : '=';
         case 0x0E:
             return '\b';
         case 0x0F:
@@ -150,6 +152,15 @@ static void keyboard_callback(registers_t reg){
     // char *sc_ascii;
     // int_to_ascii(scancode, sc_ascii);    
     // print_letter(scancode);
+
+    if (scancode == 0x2A || scancode == 0x36) {
+        shift = 1;
+        return;
+    }
+    if (scancode == 0xAA || scancode == 0xB6) {
+        shift = 0;
+        return;
+    }
     if (scancode & 0x80) return;
 
     char c = convert_char(scancode);
@@ -223,7 +234,7 @@ void print_letter(uchar_8 scancode) {
             kprint("-");
             break;
         case 0x0D:
-            kprint("+");
+            kprint("=");
             break;
         case 0x0E:
             // kprint("BackSpace");

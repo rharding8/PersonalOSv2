@@ -10,7 +10,7 @@ typedef struct {
 
 Variable vars[26]; // A-Z
 
-void interpret(char* input) {
+int interpret(char* input) {
     if (strncmp(input, "PEEK ", 5) == 0) {
         char *addr_str = input + 5;
         int addr;
@@ -20,7 +20,26 @@ void interpret(char* input) {
         int_to_ascii(value, buf);
         kprint(buf);
         kprint("\n");
-        return;
+        return 0;
+    }
+
+    if (strncmp(input, "POKE ", 5) == 0) {
+        char *addr_str = input + 5;
+        char *val_str = addr_str;
+        while (*val_str != ' ' && *val_str != '\0') val_str++;
+        if (*val_str == ' ') {
+            *val_str = '\0'; // Null-terminate the address string
+            val_str++; // Move to the value string
+        } else {
+            kprint("INVALID POKE SYNTAX\n");
+            return 0; 
+        }
+        int addr, value;
+        ascii_to_int(addr_str, &addr);
+        ascii_to_int(val_str, &value);
+        poke_block((void*)addr, value);
+        kprint("POKED\n");
+        return 0;
     }
 
     if (strncmp(input, "LET ", 4) == 0) {
@@ -32,7 +51,7 @@ void interpret(char* input) {
         vars[var - 'A'].value_ptr = mem;
 
         kprint("STORED\n");
-        return;
+        return 0;
     }
 
     if (strncmp(input, "PRINT ", 6) == 0) {
@@ -46,7 +65,7 @@ void interpret(char* input) {
                 c = *input;
             }
             kprint("\n");
-            return;
+            return 0;
         } else if (c == '\"') {
             c = input[7]; // Get the character inside quotes
             input += 7; // Move past "PRINT "
@@ -56,7 +75,7 @@ void interpret(char* input) {
                 c = *input;
             }
             kprint("\n");
-            return;
+            return 0;
         }
 
         int value = *vars[c - 'A'].value_ptr;
@@ -66,7 +85,7 @@ void interpret(char* input) {
 
         kprint(buf);
         kprint("\n");
-        return;
+        return 0;
     }
 
     if (strcmp(input, "CLEAR") == 0) {
@@ -74,5 +93,16 @@ void interpret(char* input) {
         return;
     }
 
+    if (strcmp(input, "EXIT") == 0) {
+        kprint("SHUTTING DOWN...\n");
+        return 1; // Signal to shutdown
+    }
+
+    if (strcmp(input, "RESET") == 0) {
+        kprint("REBOOTING...\n");
+        return 2; // Signal to reboot
+    }
+
     kprint("UNKNOWN COMMAND\n");
+    return 0; // Signal to continue
 }

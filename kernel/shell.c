@@ -30,12 +30,18 @@ static void read_line(char* buffer) {
     }
 }
 
-void shell_run() {
+int shell_run() {
     char input[128];
-    while (1) {
+    int exit_flag = 0;
+    while (!exit_flag) {
         kprint(">  ");
         clear_one_character();
         read_line(input);
-        interpret(input);
+        exit_flag = interpret(input);
+        kline_break();
     }
+    if (exit_flag == 1) {
+        return 1; // Signal to shutdown
+    }
+    return 0; // Signal to reset
 }
