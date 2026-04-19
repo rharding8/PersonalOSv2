@@ -20,8 +20,9 @@ typedef struct {
 static Variable variables[MAX_VARS];
 static int var_count = 0;
 
-Variable* find_var(const char* name) {
-    for (int i = 0; i < var_count; i++) {
+Variable* find_var(char* name) {
+    int i;
+    for (i = 0; i < var_count; i++) {
         if (strcmp(variables[i].name, name) == 0) {
             return &variables[i];
         }
@@ -61,7 +62,7 @@ int interpret(char* input) {
         return 0;
     }
 
-    if (strncmp(input, "let ", 4) == 0) {
+    if (strncmp(input, "LET ", 4) == 0) {
         char var_name[16];
         int value;
 
@@ -84,10 +85,10 @@ int interpret(char* input) {
         *(int*)v->data = value;
 
         kprint("OK\n");
-        return;
+        return 0;
     }
 
-    if (strncmp(input, "array ", 6) == 0) {
+    if (strncmp(input, "ARRAY ", 6) == 0) {
         char name[16];
         int size;
 
@@ -105,15 +106,16 @@ int interpret(char* input) {
         v->data = kmalloc(sizeof(int) * size);
 
         // Initialize to 0
-        for (int i = 0; i < size; i++) {
+        int i;
+        for (i = 0; i < size; i++) {
             ((int*)v->data)[i] = 0;
         }
 
         kprint("Array created\n");
-        return;
+        return 0;
     }
 
-    if (strncmp(input, "set ", 4) == 0) {
+    if (strncmp(input, "SET ", 4) == 0) {
         char name[16];
         int index, value;
 
@@ -127,21 +129,21 @@ int interpret(char* input) {
 
         if (!v || v->type != VAR_ARRAY) {
             kprint("Invalid array\n");
-            return;
+            return 0;
         }
 
         if (index >= v->size) {
             kprint("Out of bounds\n");
-            return;
+            return 0;
         }
 
         ((int*)v->data)[index] = value;
 
         kprint("OK\n");
-        return;
+        return 0;
     }
 
-    if (strncmp(input, "get ", 4) == 0) {
+    if (strncmp(input, "GET ", 4) == 0) {
         char name[16];
         int index;
 
@@ -154,7 +156,7 @@ int interpret(char* input) {
 
         if (!v || v->type != VAR_ARRAY) {
             kprint("Invalid array\n");
-            return;
+            return 0;
         }
 
         int value = ((int*)v->data)[index];
@@ -165,7 +167,7 @@ int interpret(char* input) {
         kprint(buf);
         kprint("\n");
 
-        return;
+        return 0;
     }
 
     if (strncmp(input, "PRINT ", 6) == 0) {
@@ -201,7 +203,7 @@ int interpret(char* input) {
 
         if (!v) {
             kprint("Undefined\n");
-            return;
+            return 0;
         }
 
         if (v->type == VAR_INT) {
@@ -211,7 +213,7 @@ int interpret(char* input) {
             kprint("\n");
         }
 
-        return;
+        return 0;
     }
 
     if (strcmp(input, "CLEAR") == 0) {

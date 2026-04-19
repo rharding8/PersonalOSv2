@@ -11,5 +11,7 @@ int strlen(char s[]);
 
 int strcmp(char* a, char* b);
 int strncmp(char* a, char* b, int n);
+void ascii_to_int(char str[], int* n);
+void strcpy(char* dest, char* src);
 
 #endif

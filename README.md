@@ -11,10 +11,9 @@ This is a personal side project to write OS from scratch. As an computer archite
 V2:
 - Properly display unrecognized keys
 - Memory Management
-TODO By End:
 - Pass and Execute Valid Code From Input to CPU
+TODO By End:
 - Streamline Compilation Process
-- Make Portable to macOS and WSL
 
 
 ## How to run
@@ -74,3 +73,7 @@ If everything works all right[^1], executing Makefile with make command should c
 
 [^1]: Cross compilation code sequence worked for my workstation. It may not work for all system.
 
+## AI Usage Disclaimer
+GitHub CoPilot used to write comments and the String Library Functions, as well as for some debugging.
+
+ChatGPT used early on for general ideas of how to implement memory.

@@ -50,7 +50,8 @@ void ascii_to_int(char str[], int* n){
         i++;
     }
     *n=0;
-    for(;str[i]!='\0';i++){
+    
+    for(;str[i]!='\0' && str[i] >= '0' && str[i] <= '9';i++){
         *n = *n*10 + (str[i]-'0');
     }
     if(sign)*n=-*n;
@@ -71,4 +72,11 @@ int strncmp(char* a, char* b, int n) {
         if (a[i] == 0) return 0;
     }
     return 0;
+}
+
+void strcpy(char* dest, char* src) {
+    while (*src) {
+        *dest++ = *src++;
+    }
+    *dest = '\0';
 }
