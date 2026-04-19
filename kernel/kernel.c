@@ -18,28 +18,16 @@ void test_program() {
     while (1);
 }
 
-void shutdown() {
-    port_word_out(0x604, 0x2000);
-}
-
 void main(){
-    isr_install();
-    int exit_flag = 0;
+    isr_install(); // Install ISRs and IRQs
+    int exit_flag = 0; // Set shutdown flag to 0
     while (!exit_flag) {
         init_memory();
         clear_screen();
-        
-        
-        // Demonstracte interrupt
-        // __asm__ __volatile__("int $2");
-        // __asm__ __volatile__("int $4");
-        // __asm__ __volatile__("int $15");
-        // __asm__ __volatile__("int $16");
 
-        // Demonstracte Timer Interrupt
-        asm volatile("sti");
-        // init_timer(50);
+        asm volatile("sti"); // Enable interrupts
         init_keyboard();
+
         // void* prog_addr = load((uchar_8*)test_program, 512);
         // Process p;
         // p.entry = prog_addr;
@@ -48,10 +36,8 @@ void main(){
         // p.stack = (void*)((uint_32)stack + 4096);
         // run(&p);
 
-        exit_flag = shell_run();
+        exit_flag = shell_run(); // Run the shell and get the exit flag when it exits
     }
-    shutdown();
 
-    
-    // while (1);
+    port_word_out(0x604, 0x2000); // Send shutdown command to ACPI
 }

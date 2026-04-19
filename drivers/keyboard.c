@@ -149,9 +149,6 @@ char convert_char(uchar_8 scancode) {
 
 static void keyboard_callback(registers_t reg){
     uchar_8 scancode = port_byte_in(0x60);
-    // char *sc_ascii;
-    // int_to_ascii(scancode, sc_ascii);    
-    // print_letter(scancode);
 
     if (scancode == 0x2A || scancode == 0x36) {
         shift = 1;
