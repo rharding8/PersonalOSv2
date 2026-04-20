@@ -57,6 +57,17 @@ void ascii_to_int(char str[], int* n){
     if(sign)*n=-*n;
 }
 
+void ascii_to_hex(char str[], uint_32* n){
+    int i = 0;
+    *n=0;
+
+    while (str[i] == '0' || str[i] == 'x' || str[i] == 'X') i++; // Skip leading zeros and "0x"
+    
+    for(;str[i]!='\0';i++){
+        *n = *n*16 + (str[i]-'0');
+    }
+}
+
 int strcmp(char* a, char* b) {
     while (*a && *b) {
         if (*a != *b) return *a - *b;

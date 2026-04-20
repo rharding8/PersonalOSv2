@@ -34,7 +34,11 @@ int interpret(char* input) {
     if (strncmp(input, "PEEK ", 5) == 0) {
         char *addr_str = input + 5;
         int addr;
-        ascii_to_int(addr_str, &addr);
+        if (addr_str[0] == '0' && (addr_str[1] == 'x' || addr_str[1] == 'X')) {
+            ascii_to_hex(addr_str, (uint_32*)&addr);
+        } else {
+            ascii_to_int(addr_str, &addr);
+        }
         int value = peek_block((void*)addr);
         char buf[16];
         int_to_ascii(value, buf);
@@ -55,8 +59,16 @@ int interpret(char* input) {
             return 0; 
         }
         int addr, value;
-        ascii_to_int(addr_str, &addr);
-        ascii_to_int(val_str, &value);
+        if (addr_str[0] == '0' && (addr_str[1] == 'x' || addr_str[1] == 'X')) {
+            ascii_to_hex(addr_str, (uint_32*)&addr);
+        } else {
+            ascii_to_int(addr_str, &addr);
+        }
+        if (val_str[0] == '0' && (val_str[1] == 'x' || val_str[1] == 'X')) {
+            ascii_to_hex(val_str, (uint_32*)&value);
+        } else {
+            ascii_to_int(val_str, &value);
+        }
         poke_block((void*)addr, value);
         kprint("POKED\n");
         return 0;
@@ -122,8 +134,17 @@ int interpret(char* input) {
         name[0] = input[4];
         name[1] = '\0';
 
-        ascii_to_int(input + 6, &index);
-        ascii_to_int(input + 8, &value);
+        input = input + 6; // Move past "SET "
+
+        ascii_to_int(input, &index);
+        while (*input != ' ' && *input != '\0') input++; // Move to value
+        if (*input == ' ') {
+            input++; // Move to value
+        } else {
+            kprint("INVALID SET SYNTAX\n");
+            return 0;
+        }
+        ascii_to_int(input, &value);
 
         Variable* v = find_var(name);
 

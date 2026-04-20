@@ -23,6 +23,7 @@ void main(){
     int exit_flag = 0; // Set shutdown flag to 0
     while (!exit_flag) {
         init_memory();
+        heap_init();
         clear_screen();
 
         asm volatile("sti"); // Enable interrupts
