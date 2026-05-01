@@ -1,6 +1,6 @@
-# PersonalOS
+# PersonalOSv2 (NuBasic)
 ## Note 
-This is a personal side project to write OS from scratch. As an computer architect, understanding how OS interact with hardware is essential. Main purpose of this project is to understand how operating system interact with hardware and work profeciently as intermedium between hardware and software. 
+This is a project to write OS from scratch. As an computer architect, understanding how OS interact with hardware is essential. Main purpose of this project is to understand how operating system interact with hardware and work profeciently as intermedium between hardware and software, and to create something usable in the same way early programmer OS' like BASIC were.  
 
 ## Project Progress 
 
@@ -71,9 +71,12 @@ TODO By End:
 
 If everything works all right[^1], executing Makefile with make command should compile the OS and `make run` should run the OS.
 
-[^1]: Cross compilation code sequence worked for my workstation. It may not work for all system.
+[^1]: Cross compilation code sequence works for Ubuntu 20.04 with these GCC and binutils versions. It *may* work with more up-to-date Ubuntu, GCC, and binutils.
+
+#### REMINDER: When you exit that terminal session, your PATH will reset.
+Either make sure to always run `export PATH="usr/local/i386gcc/bin:$PATH"` to your PATH before running, or add that command to the bottom of your `bashrc`/`zshrc` file in `~` to always have it.
 
 ## AI Usage Disclaimer
 GitHub CoPilot used to write comments and the String Library Functions, as well as for some debugging.
 
-ChatGPT used early on for general ideas of how to implement memory.
+ChatGPT used early on for ideas of how to implement memory and for the abandoned process files.

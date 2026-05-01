@@ -79,7 +79,7 @@ void* kmalloc(int size) {
         curr = curr->next;
     }
 
-    // Need new block
+    // Allocate new block
     heap_block_t* new_block = (heap_block_t*)alloc_block();
 
     new_block->size = 4096 - sizeof(heap_block_t);
